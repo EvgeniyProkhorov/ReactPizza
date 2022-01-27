@@ -18,9 +18,9 @@ const Categories = ({ items, onClickItem }: CategoriesProps) => {
         <div className="categories">
             <ul>
                 <li onClick={() => setActive(null)} className={active === null ? "active" : ''}>Все</li>
-                {items.map((name, ind) => {
-                    return <li className={active === ind ? 'active' : ''} onClick={() => onClickSelectItem(ind)}
-                        key={`${name}_${ind}`}>{name}</li>
+                {items.map((name, index) => {
+                    return <li className={active === index ? 'active' : ''} onClick={() => onClickSelectItem(index)}
+                        key={`${name}_${index}`}>{name}</li>
                 })}
             </ul>
         </div>
