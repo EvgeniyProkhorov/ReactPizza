@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { PizzasType } from "../pages/Home";
 
 
 const PizzaBlock = (pizzas: PizzasType) => {
-    return(
+    const [activeType, setActiveType] = useState(pizzas.types[0])
+    const [activeSize, setActiveSize] = useState(pizzas.sizes[0])
+    const availableType = ["тонкое", "традиционное"]
+    const availableSize = [26, 30, 40]
+
+    const onClickSetActiveType = (index: number) => {
+        setActiveType(index)
+    }
+    const onClickSetActiveSize = (size: number) => {
+        setActiveSize(size)
+    }
+
+    console.log(pizzas)
+    return (
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
@@ -13,21 +26,24 @@ const PizzaBlock = (pizzas: PizzasType) => {
             <h4 className="pizza-block__title">{pizzas.name}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    {pizzas.types.map((name,index)=>{
-                        return <li key={`${name}_${index}`} 
-                        className="active">{name}</li>
-                    })}
-                    <li className="active">тонкое</li>
-                    <li>традиционное</li>
+                    {/* {pizzas.types.map((name,index)=>{
+                        return <li key={`${name}_${index}`}
+                        onClick={()=> setTypes(index)}
+                            className={types === index ? "active" : ""}>{types === 0 ? 'тонкое' : "традиционное"}</li>
+                    })} */}
+                    {availableType.map((types, index) => <li key={`${types}_${index}`}
+                        className={!pizzas.types.includes(index) ? "disabled" : "" || activeType === index ? "active" : ""}
+                        onClick={() => onClickSetActiveType(index)}>{types}</li>)}
                 </ul>
                 <ul>
-                    {pizzas.sizes.map((name, index)=>{
-                        return <li key={`${name}_${index}`} 
-                        className="active">{name}</li>
+                    {availableSize.map((size, index) => {
+                        return <li key={`${size}_${index}`}
+                            onClick={() => onClickSetActiveSize(size)}
+                            className={!pizzas.sizes.includes(size) ? "disabled" : "" || activeSize === size ? "active" : ""}>{`${size} см.`}</li>
                     })}
-                    <li className="active">26 см.</li>
+                    {/* <li className="active">26 см.</li>
                     <li>30 см.</li>
-                    <li>40 см.</li>
+                    <li>40 см.</li> */}
                 </ul>
             </div>
             <div className="pizza-block__bottom">
@@ -49,7 +65,7 @@ const PizzaBlock = (pizzas: PizzasType) => {
                     <i>2</i>
                 </div>
             </div>
-        </div> 
+        </div>
     )
 }
 

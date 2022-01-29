@@ -30,13 +30,15 @@ const Home = ({ items }: HomeProps) => {
             <div className="content__items">
                 {items.map(obj => {
                     return <PizzaBlock key={obj.id}
-                        imageUrl={obj.imageUrl}
-                        name={obj.name}
-                        types={obj.types}
-                        sizes={obj.sizes}
-                        price={obj.price}
-                        category={obj.category}
-                        rating={obj.rating} />
+                            {...obj}
+                        // imageUrl={obj.imageUrl}
+                        // name={obj.name}
+                        // types={obj.types}
+                        // sizes={obj.sizes}
+                        // price={obj.price}
+                        // category={obj.category}
+                        // rating={obj.rating} 
+                        />
                 })}
             </div>
         </div>
