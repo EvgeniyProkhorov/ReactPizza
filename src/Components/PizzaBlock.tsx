@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { PizzasType } from "../pages/Home";
+import classNames from "classnames";
 
 
-const PizzaBlock = (pizzas: PizzasType) => {
-    const [activeType, setActiveType] = useState(pizzas.types[0])
-    const [activeSize, setActiveSize] = useState(pizzas.sizes[0])
+const PizzaBlock = ({ imageUrl, name, types, sizes, price, category, rating }: PizzasType) => {
+    const [activeType, setActiveType] = useState(types[0])
+    const [activeSize, setActiveSize] = useState(sizes[0])
     const availableType = ["тонкое", "традиционное"]
     const availableSize = [26, 30, 40]
 
@@ -15,39 +16,39 @@ const PizzaBlock = (pizzas: PizzasType) => {
         setActiveSize(size)
     }
 
-    console.log(pizzas)
     return (
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src={pizzas.imageUrl}
+                src={imageUrl}
                 alt="Pizza"
             />
-            <h4 className="pizza-block__title">{pizzas.name}</h4>
+            <h4 className="pizza-block__title">{name}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    {/* {pizzas.types.map((name,index)=>{
-                        return <li key={`${name}_${index}`}
-                        onClick={()=> setTypes(index)}
-                            className={types === index ? "active" : ""}>{types === 0 ? 'тонкое' : "традиционное"}</li>
-                    })} */}
-                    {availableType.map((types, index) => <li key={`${types}_${index}`}
-                        className={!pizzas.types.includes(index) ? "disabled" : "" || activeType === index ? "active" : ""}
-                        onClick={() => onClickSetActiveType(index)}>{types}</li>)}
+                    {availableType.map((mapTypes, index) => <li key={`${mapTypes}_${index}`}
+                        className={classNames({
+                            disabled: !types.includes(index),
+                            active: activeType === index
+                        })}
+                        // className={!pizzas.types.includes(index) ? "disabled" : "" || activeType === index ? "active" : ""}
+                        onClick={() => onClickSetActiveType(index)}>{mapTypes}</li>)}
                 </ul>
                 <ul>
-                    {availableSize.map((size, index) => {
-                        return <li key={`${size}_${index}`}
-                            onClick={() => onClickSetActiveSize(size)}
-                            className={!pizzas.sizes.includes(size) ? "disabled" : "" || activeSize === size ? "active" : ""}>{`${size} см.`}</li>
+                    {availableSize.map((mapSize, index) => {
+                        return <li key={`${mapSize}_${index}`}
+                            onClick={() => onClickSetActiveSize(mapSize)}
+                            className={classNames({
+                                disabled: !sizes.includes(mapSize),
+                                active: activeSize === mapSize
+                            })}
+                        // className={!pizzas.sizes.includes(size) ? "disabled" : "" || activeSize === size ? "active" : ""}
+                        >{`${mapSize} см.`}</li>
                     })}
-                    {/* <li className="active">26 см.</li>
-                    <li>30 см.</li>
-                    <li>40 см.</li> */}
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от {pizzas.price} ₽</div>
+                <div className="pizza-block__price">от {price} ₽</div>
                 <div className="button button--outline button--add">
                     <svg
                         width="12"

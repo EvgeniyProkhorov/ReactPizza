@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 type SortPopupProps = {
-  items: Array<string>
+  items: Array<{name:string, type: string}>
 }
 
 const SortPopup = ({ items }: SortPopupProps) => {
   const [visiblePopup, setVsiblePopup] = useState(false)
   const [activeItem, setActiveItem] = useState(0)
   const sortRef = useRef<HTMLDivElement>(null)
-  const activeLabel = items[activeItem]
+  const activeLabel = items[activeItem].name
 
   const onClickPopupVisible = () => setVsiblePopup(!visiblePopup)
   const onClickLiHandler = (index: number) => {
@@ -53,9 +53,9 @@ const SortPopup = ({ items }: SortPopupProps) => {
       </div>
       {visiblePopup && <div className="sort__popup">
         <ul>
-          {items.map((name, index) => <li key={`${name}_${index}`}
+          {items.map((obj, index) => <li key={`${obj.type}_${index}`}
             onClick={() => onClickLiHandler(index)}
-            className={activeItem === index ? "active" : ""}>{name}</li>)}
+            className={activeItem === index ? "active" : ""}>{obj.name}</li>)}
           {/* <li className="active">популярности</li>
           <li>цене</li>
           <li>алфавиту</li> */}

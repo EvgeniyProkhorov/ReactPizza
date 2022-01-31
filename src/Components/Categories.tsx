@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Button } from '.';
 
 type CategoriesProps = {
     items: Array<string>
