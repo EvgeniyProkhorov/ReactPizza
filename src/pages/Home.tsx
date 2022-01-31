@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import { Categories, SortPopup, PizzaBlock } from '../Components/index'
+import { setCategoryAC } from "../redux/actions/filtersAction";
+import { AppStateType } from "../redux/store";
 
 export type PizzasType = {
     id?: number
@@ -12,21 +15,26 @@ export type PizzasType = {
     rating: number
 }
 
-type HomeProps = {
-    items: Array<PizzasType>
-}
+const categoryNames = ["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
+const sortPopupItems = [
+    { name: "популярности", type: "popular" },
+    { name: "цене", type: "price" },
+    { name: "алфавиту", type: "alphabet" }]
 
 
-const Home = ({ items }: HomeProps) => {
+const Home = () => {
+    const items = useSelector(({ pizzas }: AppStateType) => pizzas.items)
+    const dispatch = useDispatch()
+    const onClickChangeCategories = useCallback((catIndex: number | null) => {
+        dispatch(setCategoryAC(catIndex))
+    }, [])
+
     return (
         <div className="container">
             <div className="content__top">
-                <Categories onClickItem={() => { }}
-                    items={["Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]} />
-                <SortPopup items={[
-                    { name:"популярности", type: "popular"},
-                    { name: "цене", type: "price"},
-                    { name: "алфавиту", type: "alphabet"}]} />
+                <Categories onClickItem={onClickChangeCategories}
+                    items={categoryNames} />
+                <SortPopup items={sortPopupItems} />
             </div>
 
             <h2 className="content__title">Все пиццы</h2>

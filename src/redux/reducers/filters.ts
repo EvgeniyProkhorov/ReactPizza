@@ -1,6 +1,7 @@
-import { setSortBy } from "../actions/filtersAction"
+import { setCategoryAC, setSortBy } from "../actions/filtersAction"
 
 type GeneralType = ReturnType<typeof setSortBy>
+    | ReturnType<typeof setCategoryAC>
 
 type InitFilterTypes = {
     category: number
@@ -16,6 +17,9 @@ const filtersReducer = (state: InitFilterTypes = initialState, action: GeneralTy
     switch (action.type) {
         case "SET-SORT-BY": {
             return { ...state, sortBy: action.payload }
+        }
+        case "SET-CATEGORY": {
+            return { ...state, category: action.payload }
         }
         default:
             return state

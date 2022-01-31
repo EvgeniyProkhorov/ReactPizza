@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 
 type CategoriesProps = {
     items: Array<string>
-    onClickItem: () => void
+    onClickItem: (catIndex: number | null) => void
 }
 
 
-const Categories = ({ items, onClickItem }: CategoriesProps) => {
+const Categories = React.memo(({ items, onClickItem }: CategoriesProps) => {
     const [active, setActive] = useState<number | null>(null)
 
-    const onClickSelectItem = (index: number) => {
-        setActive(index)
+    const onClickSelectItem = (catIndex: number | null) => {
+        setActive(catIndex)
+        onClickItem(catIndex)
     }
 
     return (
         <div className="categories">
             <ul>
-                <li onClick={() => setActive(null)} className={active === null ? "active" : ''}>Все</li>
+                <li onClick={() => onClickSelectItem(null)} className={active === null ? "active" : ''}>Все</li>
                 {items.map((name, index) => {
                     return <li className={active === index ? 'active' : ''} onClick={() => onClickSelectItem(index)}
                         key={`${name}_${index}`}>{name}</li>
@@ -24,7 +25,7 @@ const Categories = ({ items, onClickItem }: CategoriesProps) => {
             </ul>
         </div>
     );
-}
+})
 
 
 // class Categories extends React.Component<CategoriesProps> {

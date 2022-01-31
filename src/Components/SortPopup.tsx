@@ -4,7 +4,7 @@ type SortPopupProps = {
   items: Array<{name:string, type: string}>
 }
 
-const SortPopup = ({ items }: SortPopupProps) => {
+const SortPopup = React.memo(({ items }: SortPopupProps) => {
   const [visiblePopup, setVsiblePopup] = useState(false)
   const [activeItem, setActiveItem] = useState(0)
   const sortRef = useRef<HTMLDivElement>(null)
@@ -22,8 +22,8 @@ const SortPopup = ({ items }: SortPopupProps) => {
     if (!path.includes(sortRef.current as Node)) {
       setVsiblePopup(false)
     }
-    console.log(path)
-    console.log(sortRef)
+    // console.log(path)
+    // console.log(sortRef)
   }
 
   useEffect(() => {
@@ -63,6 +63,6 @@ const SortPopup = ({ items }: SortPopupProps) => {
       </div>}
     </div>
   );
-};
+})
 
 export default SortPopup;
